@@ -1,225 +1,104 @@
 
-// PET MANAGEMENT APP
+// Get HTML elements
+const breedSelect = document.getElementById("breedSelect");
+const dogImage = document.getElementById("dogImage");
+const fetchButton = document.getElementById("fetchButton");
+const statusText = document.getElementById("status");
 
-// GET HTML ELEMENTS
-const petForm = document.getElementById("petForm");
-const petId = document.getElementById("petId");
-const petName = document.getElementById("petName");
-const petType = document.getElementById("petType");
-const petBreed = document.getElementById("petBreed");
-const petAge = document.getElementById("petAge");
-const petGender = document.getElementById("petGender");
-const petDescription = document.getElementById("petDescription");
+// Dog CEO API endpoint
+const breedAPI = "https://dog.ceo/api/breeds/list/all";
 
-const petList = document.getElementById("petList");
-const searchInput = document.getElementById("searchInput");
-const filterType = document.getElementById("filterType");
+// Load all available dog breeds
+async function loadBreeds() {
+    try {
+        statusText.textContent = "Loading dog breeds...";
 
-const formTitle = document.getElementById("formTitle");
-const submitBtn = document.getElementById("submitBtn");
-const cancelBtn = document.getElementById("cancelBtn");
+        const response = await fetch(breedAPI);
+        const data = await response.json();
 
-// LOAD SAVED PETS
-let pets = JSON.parse(localStorage.getItem("pets")) || [];
+        if (data.status !== "success") {
+            throw new Error("Unable to load dog breeds.");
+        }
 
-// SAVE PETS TO LOCAL STORAGE
-function savePets() {
-    localStorage.setItem("pets", JSON.stringify(pets));
-}
+        // Clear existing options
+        breedSelect.innerHTML = "";
 
-// GET PET ICON
-function getPetIcon(type) {
-    const icons = {
-        Dog: "🐶",
-        Cat: "🐱",
-        Bird: "🐦",
-        Fish: "🐠",
-        Other: "🐾"
-    };
+        // Get and sort breed names
+        const breeds = Object.keys(data.message).sort();
 
-    return icons[type] || "🐾";
-}
+        // Add breeds to Combo Box
+        breeds.forEach(breed => {
+            const option = document.createElement("option");
 
-// DISPLAY PETS
-function displayPets() {
-    const searchValue = searchInput.value.toLowerCase();
-    const selectedType = filterType.value;
+            option.value = breed;
 
-    const filteredPets = pets.filter(pet => {
-        const matchesSearch = pet.name.toLowerCase().includes(searchValue);
-        const matchesType = selectedType === "All" || pet.type === selectedType;
+            option.textContent = breed
+                .replace(/-/g, " ")
+                .replace(/\b\w/g, letter => letter.toUpperCase());
 
-        return matchesSearch && matchesType;
-    });
-
-    petList.innerHTML = "";
-
-    if (filteredPets.length === 0) {
-        const message = document.createElement("p");
-        message.className = "empty-message";
-        message.textContent = pets.length === 0
-            ? "No pets added yet. Add your first pet!"
-            : "No pets found. Try another search or filter.";
-
-        petList.appendChild(message);
-        return;
-    }
-
-    filteredPets.forEach(pet => {
-        const card = document.createElement("div");
-        card.className = "pet-card";
-
-        const icon = document.createElement("div");
-        icon.className = "pet-icon";
-        icon.textContent = getPetIcon(pet.type);
-
-        const name = document.createElement("h3");
-        name.textContent = pet.name;
-
-        const details = document.createElement("div");
-
-        const fields = [
-            ["Type", pet.type],
-            ["Breed", pet.breed],
-            ["Age", `${pet.age} year(s)`],
-            ["Gender", pet.gender],
-            ["Description", pet.description || "No description provided."]
-        ];
-
-        fields.forEach(([label, value]) => {
-            const paragraph = document.createElement("p");
-            const strong = document.createElement("strong");
-
-            strong.textContent = label + ": ";
-            paragraph.append(strong, document.createTextNode(value));
-            details.appendChild(paragraph);
+            breedSelect.appendChild(option);
         });
 
-        const actions = document.createElement("div");
-        actions.className = "pet-actions";
+        // Select Shih Tzu by default
+        breedSelect.value = "shihtzu";
 
-        const editButton = document.createElement("button");
-        editButton.className = "edit-btn";
-        editButton.textContent = "Edit";
-        editButton.addEventListener("click", () => editPet(pet.id));
+        statusText.textContent = "Select a breed and click FETCH.";
 
-        const deleteButton = document.createElement("button");
-        deleteButton.className = "delete-btn";
-        deleteButton.textContent = "Delete";
-        deleteButton.addEventListener("click", () => deletePet(pet.id));
+        // Display initial Shih Tzu image
+        await fetchDogImage();
 
-        actions.append(editButton, deleteButton);
-        card.append(icon, name, details, actions);
-        petList.appendChild(card);
-    });
+    } catch (error) {
+        statusText.textContent = "Failed to load dog breeds.";
+        console.error(error);
+    }
 }
 
-// ADD OR UPDATE PET
-petForm.addEventListener("submit", function(event) {
-    event.preventDefault();
+// Fetch a random image based on selected breed
+async function fetchDogImage() {
+    const selectedBreed = breedSelect.value;
 
-    const petData = {
-        name: petName.value.trim(),
-        type: petType.value,
-        breed: petBreed.value.trim(),
-        age: petAge.value,
-        gender: petGender.value,
-        description: petDescription.value.trim()
-    };
-
-    if (!petData.name || !petData.type || !petData.breed ||
-        petData.age === "" || Number(petData.age) < 0 ||
-        !petData.gender) {
-        alert("Please complete all required fields.");
+    if (!selectedBreed) {
+        statusText.textContent = "Please select a dog breed.";
         return;
     }
 
-    if (petId.value) {
-        const index = pets.findIndex(pet => pet.id === petId.value);
+    try {
+        fetchButton.disabled = true;
+        statusText.textContent = "Fetching a new dog image...";
 
-        if (index !== -1) {
-            pets[index] = {
-                ...pets[index],
-                ...petData
-            };
+        // Create API endpoint using selected breed
+        const imageAPI =
+            `https://dog.ceo/api/breed/${selectedBreed}/images/random`;
 
-            alert("Pet information updated successfully!");
-        }
-    } else {
-        const newPet = {
-            id: Date.now().toString() + Math.random().toString(36).slice(2),
-            ...petData
-        };
+        const response = await fetch(imageAPI);
+        const data = await response.json();
 
-        pets.push(newPet);
-        alert("Pet added successfully!");
-    }
-
-    savePets();
-    displayPets();
-    resetForm();
-});
-
-// EDIT PET
-function editPet(id) {
-    const pet = pets.find(pet => pet.id === id);
-
-    if (!pet) return;
-
-    petId.value = pet.id;
-    petName.value = pet.name;
-    petType.value = pet.type;
-    petBreed.value = pet.breed;
-    petAge.value = pet.age;
-    petGender.value = pet.gender;
-    petDescription.value = pet.description;
-
-    formTitle.textContent = "Edit Pet Information";
-    submitBtn.textContent = "Update Pet";
-    cancelBtn.hidden = false;
-
-    petForm.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-}
-
-// DELETE PET
-function deletePet(id) {
-    const confirmDelete = confirm("Are you sure you want to delete this pet?");
-
-    if (confirmDelete) {
-        pets = pets.filter(pet => pet.id !== id);
-
-        savePets();
-        displayPets();
-
-        if (petId.value === id) {
-            resetForm();
+        if (!response.ok || data.status !== "success") {
+            throw new Error("Unable to fetch dog image.");
         }
 
-        alert("Pet deleted successfully!");
+        // Display fetched dog image
+        dogImage.src = data.message;
+        dogImage.style.display = "block";
+
+        // Update status
+        const breedName = selectedBreed
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, letter => letter.toUpperCase());
+
+        statusText.textContent = `Showing a random ${breedName} image.`;
+
+    } catch (error) {
+        statusText.textContent = "Unable to fetch image. Please try again.";
+        console.error(error);
+
+    } finally {
+        fetchButton.disabled = false;
     }
 }
 
-// RESET FORM
-function resetForm() {
-    petForm.reset();
-    petId.value = "";
+// FETCH button event
+fetchButton.addEventListener("click", fetchDogImage);
 
-    formTitle.textContent = "Add New Pet";
-    submitBtn.textContent = "Add Pet";
-    cancelBtn.hidden = true;
-}
-
-// CANCEL EDIT
-cancelBtn.addEventListener("click", resetForm);
-
-// SEARCH PETS
-searchInput.addEventListener("input", displayPets);
-
-// FILTER PETS
-filterType.addEventListener("change", displayPets);
-
-// DISPLAY SAVED PETS WHEN PAGE LOADS
-displayPets();
+// Load breeds when the app opens
+loadBreeds();

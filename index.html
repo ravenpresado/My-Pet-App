@@ -4,85 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Management App</title>
+    <title>My Pet App</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>🐾 Pet Management App</h1>
-        <p>Manage and keep track of your lovely pets!</p>
-    </header>
+    <div class="container">
 
-    <main class="container">
+        <h1>My Pet App</h1>
+        <h3>Final Activity - SIA Subject</h3>
 
-        <section class="form-section">
-            <h2 id="formTitle">Add New Pet</h2>
+        <div class="form-group">
+            <label for="breedSelect">Select Dog Breed:</label>
 
-            <form id="petForm">
-                <input type="hidden" id="petId">
+            <select id="breedSelect">
+                <option value="">Loading breeds...</option>
+            </select>
+        </div>
 
-                <label for="petName">Pet Name</label>
-                <input type="text" id="petName" placeholder="Enter pet name" required>
+        <div class="image-container">
+            <img id="dogImage" src="" alt="Dog Image">
+            <p id="status">Loading dog breeds...</p>
+        </div>
 
-                <label for="petType">Pet Type</label>
-                <select id="petType" required>
-                    <option value="">Select pet type</option>
-                    <option value="Dog">Dog</option>
-                    <option value="Cat">Cat</option>
-                    <option value="Bird">Bird</option>
-                    <option value="Fish">Fish</option>
-                    <option value="Other">Other</option>
-                </select>
+        <button id="fetchButton">FETCH</button>
 
-                <label for="petBreed">Breed</label>
-                <input type="text" id="petBreed" placeholder="Enter breed" required>
+        <h2>Elements, Type, and Meaning</h2>
 
-                <label for="petAge">Age</label>
-                <input type="number" id="petAge" min="0" placeholder="Enter age" required>
+        <table>
+            <thead>
+                <tr>
+                    <th>Element</th>
+                    <th>Type</th>
+                    <th>Meaning</th>
+                </tr>
+            </thead>
 
-                <label for="petGender">Gender</label>
-                <select id="petGender" required>
-                    <option value="">Select gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
+            <tbody>
+                <tr>
+                    <td>Dog Breed</td>
+                    <td>Combo Box</td>
+                    <td>Select a dog breed.</td>
+                </tr>
 
-                <label for="petDescription">Description</label>
-                <textarea id="petDescription" placeholder="Enter pet description"></textarea>
+                <tr>
+                    <td>Dog Image</td>
+                    <td>Image Display</td>
+                    <td>Displays a random image of the selected breed.</td>
+                </tr>
 
-                <button type="submit" id="submitBtn">Add Pet</button>
-                <button type="button" id="cancelBtn" class="cancel-btn" hidden>Cancel Edit</button>
-            </form>
-        </section>
+                <tr>
+                    <td>FETCH</td>
+                    <td>Button</td>
+                    <td>Fetches a new random dog image.</td>
+                </tr>
+            </tbody>
+        </table>
 
-        <section class="pets-section">
-            <h2>My Pets</h2>
-
-            <div class="search-filter">
-                <input type="text" id="searchInput" placeholder="Search pets by name...">
-
-                <select id="filterType">
-                    <option value="All">All Pets</option>
-                    <option value="Dog">Dogs</option>
-                    <option value="Cat">Cats</option>
-                    <option value="Bird">Birds</option>
-                    <option value="Fish">Fish</option>
-                    <option value="Other">Others</option>
-                </select>
-            </div>
-
-            <div id="petList" class="pet-list">
-                <p class="empty-message">No pets added yet.</p>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>Pet Management App | School Project</p>
-    </footer>
+    </div>
 
     <script src="script.js"></script>
+
 </body>
 </html>
