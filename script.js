@@ -4,6 +4,7 @@ const breedSelect = document.getElementById("breedSelect");
 const imageGallery = document.getElementById("imageGallery");
 const fetchButton = document.getElementById("fetchButton");
 const statusText = document.getElementById("status");
+let slideshowStarted = false;
 
 const tableElements = [
     {
@@ -214,6 +215,8 @@ async function fetchDogImages(breed) {
 
     const shuffled = [...data.message].sort(() => Math.random() - 0.5);
 
+    console.log("Total images available:", data.message.length);
+
     return shuffled.slice(0, 8);
 }
 
@@ -274,6 +277,9 @@ async function fetchOtherAnimalImages(name) {
 
 // FETCH button function
 async function fetchAnimalImage() {
+        if (slideshowStarted) return;
+    slideshowStarted = true;
+
     const category = animalCategory.value;
     const selectedAnimal = breedSelect.value;
 
@@ -327,9 +333,10 @@ async function fetchAnimalImage() {
         console.error("FETCH ERROR:", error);
         statusText.textContent = error.message;
 
-    } finally {
-        fetchButton.disabled = false;
-    }
+   } finally {
+    slideshowStarted = false;
+    fetchButton.disabled = false;
+}
 }
 
 
@@ -343,7 +350,5 @@ animalCategory.addEventListener("change", async () => {
 fetchButton.addEventListener("click", fetchAnimalImage);
 
 // Load app
-
-
 loadAnimalTypes();
 
