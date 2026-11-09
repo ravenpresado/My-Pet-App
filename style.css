@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -10,7 +9,7 @@ body {
     background: linear-gradient(135deg, #f4f0e4, #d9e5d1);
     color: #344638;
     min-height: 100vh;
-    padding: 30px 15px; 
+    padding: 30px 15px;
 }
 
 .container {
@@ -46,28 +45,64 @@ label {
     font-weight: bold;
 }
 
-select {
+/* Dropdown and text input */
+select,
+input[type="text"] {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #b8cbb0;
-    border-radius: 8px;
-    background: #f4f7f0;
+    padding: 18px 50px 18px 24px;
+    font-size: 18px;
+    border: 2px solid #344638;
+    border-radius: 12px;
+    background-color: #f4f7f0;
     color: #344638;
-    font-size: 15px;
 }
 
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23344638' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 25px center;
+    background-size: 20px;
+}
 
+/* Image container */
 .image-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 25px 0;
-    padding: 25px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 25px auto;
+    padding: 15px;
     background: #f4f7f0;
-    border: 1px solid #d9e5d1;
+    border: 2px solid #344638;
     border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Animal image */
+.image-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.gallery-image {
+    display: block;
+    width: 260px;
+    height: 270px;
+    object-fit: cover;
+    margin: 0 auto;
+    border-radius: 18px;
+    border: 2px solid #344638;
+}
+
+.gallery-image:hover {
+    transform: scale(1.04);
 }
 
 #dogImage {
@@ -78,7 +113,7 @@ select {
     object-fit: cover;
     margin: 0 auto;
     border-radius: 18px;
-    border: 4px solid #ffffff;
+    border: 2px solid #344638;
     box-shadow: 0 8px 20px rgba(54, 91, 66, 0.20);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -88,20 +123,19 @@ select {
     box-shadow: 0 12px 25px rgba(54, 91, 66, 0.28);
 }
 
-
 #status {
     margin-top: 12px;
     color: #71856d;
 }
 
-/* Improved FETCH button */
+/* FETCH button */
 button {
     display: block;
     width: 100%;
     padding: 16px;
     background: linear-gradient(135deg, #294832, #52764b);
     color: #ffffff;
-    border: 2px solid #8faf83;
+    border: 2px solid #344638;
     border-radius: 30px;
     font-size: 17px;
     font-weight: bold;
@@ -128,8 +162,12 @@ h2 {
     text-align: center;
 }
 
+/* Information table */
 table {
+    width: 100%;
     margin-top: 20px;
+    border-collapse: collapse;
+    border: 2px solid #344638;
 }
 
 th {
@@ -137,16 +175,23 @@ th {
     color: #ffffff;
     padding: 13px;
     text-align: left;
+    border: 1px solid #344638;
 }
 
 td {
     padding: 12px;
-    border-bottom: 1px solid #e1e9dc;
+    border: 1px solid #344638;
     color: #465849;
 }
 
 tr:nth-child(even) {
     background: #f4f7f0;
+}
+
+@media (max-width: 650px) {
+    .image-gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 600px) {
@@ -161,99 +206,4 @@ tr:nth-child(even) {
     th, td {
         padding: 9px;
     }
-}
-
-/* Animal Image Gallery */
-
-.image-gallery {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    width: 100%;
-    margin: 20px auto;
-}
-
-.gallery-image {
-    display: block;
-    width: 260px;
-    height: 270px;
-    object-fit: cover;
-    margin: 0 auto;
-    border-radius: 18px;
-}
-
-.gallery-image:hover {
-    transform: scale(1.04);
-}
-
-@media (max-width: 650px) {
-    .image-gallery {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-select {
-    background-position: right 20px center;
-    padding-right: 45px;
-}
-
-select {
-    width: 100%;
-    padding: 18px 50px 18px 24px;
-    font-size: 18px;
-    border: 1px solid #b8cdb0;
-    border-radius: 12px;
-    background-color: #f4f7f0;
-    color: #344638;
-
-    appearance: none;
-    -webkit-appearance: none;
-
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23344638' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-
-    background-repeat: no-repeat;
-    background-position: right 25px center;
-    background-size: 20px;
-}
-
-.image-gallery {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.gallery-image {
-    display: block;
-    margin: 0 auto;
-}
-
-.image-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    max-width: 100%;
-    margin: 25px auto;
-    padding: 15px;
-    background: #f4f7f0;
-    border: 1px solid #b8cdb0;
-    border-radius: 18px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.image-gallery {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.gallery-image {
-    display: block;
-    width: 260px;
-    height: 270px;
-    object-fit: cover;
-    margin: 0 auto;
-    border-radius: 18px;
 }
