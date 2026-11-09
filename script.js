@@ -1,7 +1,7 @@
 
 const animalCategory = document.getElementById("animalCategory");
 const breedSelect = document.getElementById("breedSelect");
-const dogImage = document.getElementById("dogImage");
+const imageGallery = document.getElementById("imageGallery");
 const fetchButton = document.getElementById("fetchButton");
 const statusText = document.getElementById("status");
 
@@ -83,23 +83,66 @@ function formatBreedName(breed) {
 
 // Update the information table
 function updateAnimalTable(name, category) {
-    const categoryNames = {
-        dogs: "Dog",
-        cats: "Cat",
-        birds: "Bird",
-        fishes: "Fish",
-        horses: "Horse",
-        chickens: "Chicken"
+    const animalOrigins = {
+        // Dogs
+        "Shih Tzu": "China",
+        "Beagle": "England",
+        "Bulldog": "England",
+        "Chihuahua": "Mexico",
+        "Dachshund": "Germany",
+        "Golden Retriever": "Scotland",
+        "German Shepherd": "Germany",
+        "Siberian Husky": "Siberia",
+        "Labrador Retriever": "Canada",
+        "Poodle": "Germany and France",
+        "Pomeranian": "Pomerania, Europe",
+        "Pug": "China",
+
+        // Cats
+        "Persian": "Persia (modern-day Iran)",
+        "Siamese": "Thailand",
+        "Maine Coon": "United States",
+        "Bengal": "United States",
+        "Ragdoll": "United States",
+
+        // Birds
+        "Parrot": "Various tropical regions",
+        "Canary": "Canary Islands",
+        "Cockatiel": "Australia",
+        "Budgerigar": "Australia",
+        "Peacock": "South Asia",
+
+        // Fishes
+        "Goldfish": "China",
+        "Betta Fish": "Southeast Asia",
+        "Guppy": "South America",
+        "Clownfish": "Indo-Pacific region",
+        "Koi Fish": "Japan",
+
+        // Horses
+        "Arabian": "Arabian Peninsula",
+        "Thoroughbred": "England",
+        "Clydesdale": "Scotland",
+        "Mustang": "North America",
+        "Friesian": "Netherlands",
+
+        // Chickens
+        "Silkie": "China",
+        "Rhode Island Red": "United States",
+        "Leghorn": "Italy",
+        "Plymouth Rock": "United States",
+        "Orpington": "England"
     };
 
-    const description =
-        animalDescriptions[name] ||
-        `${name} is a type of ${categoryNames[category].toLowerCase()}.`;
+    const characteristics = animalDescriptions[name] ||
+        `A type of ${category.slice(0, -1)} with its own unique features.`;
+
+    const origin = animalOrigins[name] || "Origin information unavailable.";
 
     const information = [
-        ["Animal Name", "Breed or Type", name],
-        ["Animal Category", "Group", categoryNames[category]],
-        ["Description", "Information", description]
+        [name, "Selected Animal", name],
+        [origin, "Country or Region", origin],
+        [characteristics, "Characteristics", characteristics]
     ];
 
     information.forEach((item, index) => {
@@ -158,130 +201,25 @@ async function loadAnimalTypes() {
 }
 
 // Fetch a dog image using Dog CEO
-async function fetchDogImage(breed) {
+async function fetchDogImages(breed) {
     const response = await fetch(
-        `https://dog.ceo/api/breed/${breed}/images/random`
+        `https://dog.ceo/api/breed/${breed}/images`
     );
 
     const data = await response.json();
 
     if (!response.ok || data.status !== "success") {
-        throw new Error("Unable to fetch dog image.");
+        throw new Error("Unable to fetch dog images.");
     }
 
-    return data.message;
+    const shuffled = [...data.message].sort(() => Math.random() - 0.5);
+
+    return shuffled.slice(0, 8);
 }
 
 // Search for other animal images using Wikimedia Commons
-async function fetchOtherAnimalImage(name) {
-    const category = animalCategory.value;
 
-    const searchTerm = `${name} ${category === "fishes" ? "fish" : category.slice(0, -1)}`;
-
-    const apiURL =
-        "https://commons.wikimedia.org/w/api.php" +
-        "?action=query" +
-        "&generator=search" +
-        "&gsrnamespace=6" +
-        "&gsrlimit=20" +
-        "&prop=imageinfo" +
-        "&iiprop=url" +
-        "&iiurlwidth=800" +
-        "&format=json" +
-        "&origin=*" +
-        "&gsrsearch=" + encodeURIComponent(searchTerm + " filetype:bitmap");
-
-    const response = await fetch(apiURL);
-    const data = await response.json();
-
-    if (!response.ok || !data.query || !data.query.pages) {
-        throw new Error("No image found for this animal.");
-    }
-
-    const pages = Object.values(data.query.pages);
-
-    const imagePages = pages.filter(page =>
-        page.imageinfo &&
-        page.imageinfo.length > 0 &&
-        page.imageinfo[0].mime &&
-        page.imageinfo[0].mime.startsWith("image/")
-    );
-
-    if (imagePages.length === 0) {
-        throw new Error("No suitable image found.");
-    }
-
-    const randomPage =
-        imagePages[Math.floor(Math.random() * imagePages.length)];
-
-    return randomPage.imageinfo[0].thumburl ||
-        randomPage.imageinfo[0].url;
-}
-
-// FETCH button function
-async function fetchAnimalImage() {
-    const category = animalCategory.value;
-    const selectedAnimal = breedSelect.value;
-
-    if (!selectedAnimal) {
-        statusText.textContent = "Please select an animal.";
-        return;
-    }
-
-    try {
-        fetchButton.disabled = true;
-        statusText.textContent = "Fetching animal image...";
-
-        let imageURL;
-
-        if (category === "dogs") {
-            imageURL = await fetchDogImage(selectedAnimal);
-        } else {
-            imageURL = await fetchOtherAnimalImage(selectedAnimal);
-        }
-
-        dogImage.onload = () => {
-            updateAnimalTable(
-                category === "dogs"
-                    ? formatBreedName(selectedAnimal)
-                    : selectedAnimal,
-                category
-            );
-
-            statusText.textContent =
-                `Showing a ${selectedAnimal} image.`;
-
-            fetchButton.disabled = false;
-        };
-
-        dogImage.onerror = () => {
-            statusText.textContent = "Unable to display image. Try again.";
-            fetchButton.disabled = false;
-        };
-
-        dogImage.src = imageURL;
-        dogImage.style.display = "block";
-
-    } catch (error) {
-        statusText.textContent =
-            "Unable to fetch image. Please try again.";
-
-        fetchButton.disabled = false;
-        console.error(error);
-    }
-}
-
-// Change animal category
-animalCategory.addEventListener("change", async () => {
-    await loadAnimalTypes();
-});
-
-// FETCH button
-fetchButton.addEventListener("click", fetchAnimalImage);
-
-// Load app
-
-async function fetchOtherAnimalImage(name) {
+async function fetchOtherAnimalImages(name) {
     const category = animalCategory.value;
 
     const categoryNames = {
@@ -299,10 +237,10 @@ async function fetchOtherAnimalImage(name) {
         "?action=query" +
         "&generator=search" +
         "&gsrnamespace=6" +
-        "&gsrlimit=30" +
+        "&gsrlimit=50" +
         "&prop=imageinfo" +
         "&iiprop=url%7Cmime" +
-        "&iiurlwidth=800" +
+        "&iiurlwidth=600" +
         "&format=json" +
         "&origin=*" +
         "&gsrsearch=" + encodeURIComponent(searchTerm);
@@ -311,29 +249,101 @@ async function fetchOtherAnimalImage(name) {
     const data = await response.json();
 
     if (!response.ok || !data.query || !data.query.pages) {
-        throw new Error("No image found for this animal.");
+        throw new Error("No images found.");
     }
 
     const pages = Object.values(data.query.pages);
 
-    const imagePages = pages.filter(page =>
-        page.imageinfo &&
-        page.imageinfo.length > 0 &&
-        page.imageinfo[0].mime &&
-        page.imageinfo[0].mime.startsWith("image/")
-    );
+    const images = pages
+        .filter(page =>
+            page.imageinfo &&
+            page.imageinfo.length > 0 &&
+            page.imageinfo[0].mime &&
+            page.imageinfo[0].mime.startsWith("image/")
+        )
+        .map(page =>
+            page.imageinfo[0].thumburl ||
+            page.imageinfo[0].url
+        );
 
-    if (imagePages.length === 0) {
-        throw new Error("No suitable image found.");
-    }
-
-    const randomPage =
-        imagePages[Math.floor(Math.random() * imagePages.length)];
-
-    return randomPage.imageinfo[0].thumburl ||
-        randomPage.imageinfo[0].url;
+    return [...new Set(images)]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 8);
 }
 
 
-initializeApp();
+// FETCH button function
+async function fetchAnimalImage() {
+    const category = animalCategory.value;
+    const selectedAnimal = breedSelect.value;
+
+    if (!selectedAnimal) {
+        statusText.textContent = "Please select an animal.";
+        return;
+    }
+
+    try {
+        fetchButton.disabled = true;
+        imageGallery.innerHTML = "";
+        statusText.textContent = "Fetching pictures...";
+
+        let images = [];
+
+        if (category === "dogs") {
+            images = await fetchDogImages(selectedAnimal);
+        } else {
+            images = await fetchOtherAnimalImages(selectedAnimal);
+        }
+
+        if (images.length === 0) {
+            throw new Error("No pictures found.");
+        }
+
+        const animalName = category === "dogs"
+            ? formatBreedName(selectedAnimal)
+            : selectedAnimal;
+
+        updateAnimalTable(animalName, category);
+
+        for (let i = 0; i < images.length; i++) {
+            imageGallery.innerHTML = "";
+
+            const image = document.createElement("img");
+            image.src = images[i];
+            image.alt = animalName;
+            image.className = "gallery-image";
+
+            imageGallery.appendChild(image);
+
+            statusText.textContent =
+                `Showing picture ${i + 1} of ${images.length}`;
+
+            await new Promise(resolve => setTimeout(resolve, 1500));
+        }
+
+        statusText.textContent = "Finished showing pictures!";
+
+    } catch (error) {
+        console.error("FETCH ERROR:", error);
+        statusText.textContent = error.message;
+
+    } finally {
+        fetchButton.disabled = false;
+    }
+}
+
+
+
+// Change animal category
+animalCategory.addEventListener("change", async () => {
+    await loadAnimalTypes();
+});
+
+// FETCH button
+fetchButton.addEventListener("click", fetchAnimalImage);
+
+// Load app
+
+
+loadAnimalTypes();
 
