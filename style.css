@@ -77,22 +77,32 @@ select {
     color: #71856d;
 }
 
+/* Improved FETCH button */
 button {
     display: block;
     width: 100%;
-    padding: 13px;
-    background: #365b42;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 16px;
+    background: linear-gradient(135deg, #294832, #52764b);
+    color: #ffffff;
+    border: 2px solid #8faf83;
+    border-radius: 30px;
+    font-size: 17px;
     font-weight: bold;
+    letter-spacing: 2px;
     cursor: pointer;
-    transition: 0.3s;
+    box-shadow: 0 6px 15px rgba(41, 72, 50, 0.3);
+    transition: all 0.3s ease;
 }
 
 button:hover {
-    background: #294832;
+    background: linear-gradient(135deg, #6b8f5e, #8faf83);
+    color: #294832;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(41, 72, 50, 0.35);
+}
+
+button:active {
+    transform: scale(0.97);
 }
 
 h2 {
