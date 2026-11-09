@@ -280,10 +280,60 @@ animalCategory.addEventListener("change", async () => {
 fetchButton.addEventListener("click", fetchAnimalImage);
 
 // Load app
-async function initializeApp() {
-    await loadAnimalTypes();
-    await fetchAnimalImage();
+
+async function fetchOtherAnimalImage(name) {
+    const category = animalCategory.value;
+
+    const categoryNames = {
+        cats: "cat",
+        birds: "bird",
+        fishes: "fish",
+        horses: "horse",
+        chickens: "chicken"
+    };
+
+    const searchTerm = `${name} ${categoryNames[category]}`;
+
+    const apiURL =
+        "https://commons.wikimedia.org/w/api.php" +
+        "?action=query" +
+        "&generator=search" +
+        "&gsrnamespace=6" +
+        "&gsrlimit=30" +
+        "&prop=imageinfo" +
+        "&iiprop=url%7Cmime" +
+        "&iiurlwidth=800" +
+        "&format=json" +
+        "&origin=*" +
+        "&gsrsearch=" + encodeURIComponent(searchTerm);
+
+    const response = await fetch(apiURL);
+    const data = await response.json();
+
+    if (!response.ok || !data.query || !data.query.pages) {
+        throw new Error("No image found for this animal.");
+    }
+
+    const pages = Object.values(data.query.pages);
+
+    const imagePages = pages.filter(page =>
+        page.imageinfo &&
+        page.imageinfo.length > 0 &&
+        page.imageinfo[0].mime &&
+        page.imageinfo[0].mime.startsWith("image/")
+    );
+
+    if (imagePages.length === 0) {
+        throw new Error("No suitable image found.");
+    }
+
+    const randomPage =
+        imagePages[Math.floor(Math.random() * imagePages.length)];
+
+    return randomPage.imageinfo[0].thumburl ||
+        randomPage.imageinfo[0].url;
 }
+
 
 initializeApp();
 
