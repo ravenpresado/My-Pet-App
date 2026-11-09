@@ -245,8 +245,7 @@ function displayCurrentImage(animalName) {
 
     imageGallery.appendChild(image);
 
-    statusText.textContent =
-        `Showing picture ${currentImageIndex + 1} of ${images.length}`;
+    statusText.textContent = "";
 }
 
 // FETCH button: one click = one image
