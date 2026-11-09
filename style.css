@@ -124,15 +124,12 @@ button:active {
 
 h2 {
     color: #365b42;
-    margin: 30px 0 15px;
+    margin: 40px 0 20px;
     text-align: center;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    overflow: hidden;
-    border-radius: 8px;
+    margin-top: 20px;
 }
 
 th {
