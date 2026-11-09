@@ -306,3 +306,25 @@ td,
 th {
     font-family: 'Nunito', sans-serif;
 }
+
+/* Animated My Pet App title */
+h1 {
+    color: #365b42;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    text-shadow: 3px 4px 6px rgba(54, 91, 66, 0.35);
+    animation: titleFloat 3s ease-in-out infinite;
+}
+
+/* Gentle floating animation */
+@keyframes titleFloat {
+    0%, 100% {
+        transform: translateY(0);
+        text-shadow: 3px 4px 6px rgba(54, 91, 66, 0.35);
+    }
+
+    50% {
+        transform: translateY(-6px);
+        text-shadow: 4px 9px 10px rgba(54, 91, 66, 0.25);
+    }
+}
