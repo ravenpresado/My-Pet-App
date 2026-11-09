@@ -328,3 +328,12 @@ h1 {
         text-shadow: 4px 9px 10px rgba(54, 91, 66, 0.25);
     }
 }
+
+/* Smaller FETCH button */
+#fetchButton {
+    width: 180px;
+    padding: 12px 24px;
+    margin: 15px auto;
+    font-size: 16px;
+    border-radius: 25px;
+}
