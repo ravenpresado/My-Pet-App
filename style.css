@@ -45,9 +45,13 @@ label {
     font-weight: bold;
 }
 
-/* Dropdown and text input */
-select,
-input[type="text"] {
+/* Custom dropdown */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+select {
     width: 100%;
     padding: 18px 50px 18px 24px;
     font-size: 18px;
@@ -55,8 +59,39 @@ input[type="text"] {
     border-radius: 12px;
     background-color: #f4f7f0;
     color: #344638;
+    appearance: none;
+    -webkit-appearance: none;
+    pointer-events: none;
 }
 
+/* Dropdown arrow button */
+.select-arrow {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 55px;
+    height: calc(100% - 4px);
+    padding: 0;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    background: transparent;
+    color: #344638;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: none;
+    letter-spacing: 0;
+}
+
+.select-arrow:hover {
+    background: #d9e5d1;
+    color: #294832;
+    transform: none;
+    box-shadow: none;
+}
+
+.select-arrow:active {
+    transform: none;
+}
 select {
     appearance: none;
     -webkit-appearance: none;
@@ -203,7 +238,47 @@ tr:nth-child(even) {
         font-size: 13px;
     }
 
-    th, td {
-        padding: 9px;
-    }
+    tth, td {
+    padding: 13px;
+    text-align: left;
+    border: 2px solid #344638;
+}
+
+th {
+    background: #8faf83;
+    color: #ffffff;
+}
+
+td {
+    color: #465849;
+}
+
+tr:nth-child(even) {
+    background: #f4f7f0;
+}
+}
+
+/* Dark borders for every table cell */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid #344638;
+}
+
+th,
+td {
+    border: 2px solid #344638 !important;
+    padding: 13px;
+}
+
+/* Hide the browser's default dropdown arrow */
+select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background-image: none !important;
+}
+
+select::-ms-expand {
+    display: none;
 }

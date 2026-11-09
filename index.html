@@ -13,26 +13,36 @@
         <h1>My Pet App</h1>
 
         <div class="form-group">
-            <label for="animalCategory">Select Animal Category:</label>
+    <label for="animalCategory">Select Animal Category:</label>
 
-            <select id="animalCategory">
-                <option value="dogs">Dogs</option>
-                <option value="cats">Cats</option>
-                <option value="birds">Birds</option>
-                <option value="fishes">Fishes</option>
-                <option value="horses">Horses</option>
-                <option value="chickens">Chickens</option>
-            </select>
-        </div>
+    <div class="select-wrapper">
+        <select id="animalCategory">
+            <option value="dogs">Dogs</option>
+            <option value="cats">Cats</option>
+            <option value="birds">Birds</option>
+            <option value="fishes">Fishes</option>
+            <option value="horses">Horses</option>
+            <option value="chickens">Chickens</option>
+        </select>
 
+        <button type="button" class="select-arrow" id="categoryArrow" aria-label="Open animal categories">
+            ▼
+        </button>
+    </div>
+</div>
         <div class="form-group">
-            <label for="breedSelect">Select Breed or Type:</label>
+    <label for="breedSelect">Select Breed or Type:</label>
 
-            <select id="breedSelect">
-                <option value="">Loading animals...</option>
-            </select>
-        </div>
+    <div class="select-wrapper">
+        <select id="breedSelect">
+            <option value="">Loading animals...</option>
+        </select>
 
+        <button type="button" class="select-arrow" id="breedArrow" aria-label="Open animal breeds">
+            ▼
+        </button>
+    </div>
+</div>
         <div class="image-container">
             <div id="imageGallery" class="image-gallery"></div>
             <p id="status">Select an animal and click FETCH.</p>

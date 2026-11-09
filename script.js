@@ -321,5 +321,14 @@ breedSelect.addEventListener("change", () => {
 
 fetchButton.addEventListener("click", fetchAnimalImage);
 
+// Open dropdown only when the arrow is clicked
+document.getElementById("categoryArrow").addEventListener("click", () => {
+    animalCategory.showPicker();
+});
+
+document.getElementById("breedArrow").addEventListener("click", () => {
+    breedSelect.showPicker();
+});
+
 // Initial loading only
 loadAnimalTypes();
