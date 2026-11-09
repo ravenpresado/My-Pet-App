@@ -174,12 +174,12 @@ tr:nth-child(even) {
 }
 
 .gallery-image {
-    width: 100%;
-    height: 180px;
+    display: block;
+    width: 260px;
+    height: 270px;
     object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease;
+    margin: 0 auto;
+    border-radius: 18px;
 }
 
 .gallery-image:hover {
@@ -216,4 +216,15 @@ select {
     background-size: 20px;
 }
 
+.image-gallery {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery-image {
+    display: block;
+    margin: 0 auto;
+}
 
