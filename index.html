@@ -14,13 +14,26 @@
         <h1>My Pet App</h1>
         <h3>Final Activity - SIA Subject</h3>
 
-        <div class="form-group">
-            <label for="breedSelect">Select Dog Breed:</label>
+       <div class="form-group">
+    <label for="animalCategory">Select Animal Category:</label>
 
-            <select id="breedSelect">
-                <option value="">Loading breeds...</option>
-            </select>
-        </div>
+    <select id="animalCategory">
+        <option value="dogs">Dogs</option>
+        <option value="cats">Cats</option>
+        <option value="birds">Birds</option>
+        <option value="fishes">Fishes</option>
+        <option value="horses">Horses</option>
+        <option value="chickens">Chickens</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="breedSelect">Select Breed or Type:</label>
+
+    <select id="breedSelect">
+        <option value="">Loading animals...</option>
+    </select>
+</div>
 
         <div class="image-container">
             <img id="dogImage" src="" alt="Dog Image">
@@ -28,8 +41,6 @@
         </div>
 
         <button id="fetchButton">FETCH</button>
-
-        <h2>Elements, Type, and Meaning</h2>
 
         <table>
             <thead>
@@ -39,26 +50,25 @@
                     <th>Meaning</th>
                 </tr>
             </thead>
+<tbody>
+    <tr>
+        <td id="element1">Breed Name</td>
+        <td id="type1">Dog Breed</td>
+        <td id="meaning1">Waiting for breed selection...</td>
+    </tr>
 
-            <tbody>
-                <tr>
-                    <td>Dog Breed</td>
-                    <td>Combo Box</td>
-                    <td>Select a dog breed.</td>
-                </tr>
+    <tr>
+        <td id="element2">Origin</td>
+        <td id="type2">Breed Information</td>
+        <td id="meaning2">Waiting for breed selection...</td>
+    </tr>
 
-                <tr>
-                    <td>Dog Image</td>
-                    <td>Image Display</td>
-                    <td>Displays a random image of the selected breed.</td>
-                </tr>
-
-                <tr>
-                    <td>FETCH</td>
-                    <td>Button</td>
-                    <td>Fetches a new random dog image.</td>
-                </tr>
-            </tbody>
+    <tr>
+        <td id="element3">Temperament</td>
+        <td id="type3">Personality</td>
+        <td id="meaning3">Waiting for breed selection...</td>
+    </tr>
+</tbody>
         </table>
 
     </div>
