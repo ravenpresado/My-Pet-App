@@ -30,7 +30,7 @@ const tableElements = [
 const animalTypes = {
     cats: ["Persian", "Siamese", "Maine Coon", "Bengal", "Ragdoll", "Sphynx", "British Shorthair", "Domestic Shorthair"],
     birds: ["Parrot", "Canary", "Cockatiel", "Budgerigar", "Eagle", "Owl", "Pigeon", "Peacock"],
-    fishes: ["Goldfish", "Betta Fish", "Guppy", "Clownfish", "Angelfish", "Koi Fish", "Tuna", "Salmon"],
+    fishes: ["Goldfish", "Betta Fish", "Guppy", "Clownfish", "Angelfish", "Koi Fish"],
     horses: ["Arabian", "Thoroughbred", "Clydesdale", "Mustang", "Appaloosa", "Friesian", "Quarter Horse"],
     chickens: ["Silkie", "Rhode Island Red", "Leghorn", "Plymouth Rock", "Orpington", "Sussex", "Brahma"]
 };

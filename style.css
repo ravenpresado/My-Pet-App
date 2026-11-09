@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Nunito', sans-serif;
     background: linear-gradient(135deg, #f4f0e4, #d9e5d1);
     color: #344638;
     min-height: 100vh;
@@ -281,4 +281,28 @@ select {
 
 select::-ms-expand {
     display: none;
+}
+
+/* Cute Nunito font styling */
+h1 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+}
+
+label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+}
+
+button,
+select,
+td,
+th {
+    font-family: 'Nunito', sans-serif;
 }
