@@ -399,17 +399,16 @@ td {
     transition: background-color 0.3s ease;
 }
 
-/* ===== FOREST SCENERY BACKGROUND ===== */
-
-
-
-/* Forest trees and scenery */
-
-
 body {
     background-image: url("forest.jpg.png") !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
     background-attachment: fixed !important;
+}
+
+/* Remove the background outside the app */
+body {
+    background: #ffffff !important;
+    background-image: none !important;
 }
