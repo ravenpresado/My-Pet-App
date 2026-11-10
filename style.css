@@ -15,7 +15,17 @@ body {
 .container {
     max-width: 850px;
     margin: 0 auto;
-    background: #ffffff;
+    background:
+        linear-gradient(
+            rgba(255, 255, 255, 0.72),
+            rgba(255, 255, 255, 0.72)
+        ),
+        url("forest.jpg.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
     padding: 30px;
     border-radius: 18px;
     box-shadow: 0 8px 25px rgba(54, 91, 66, 0.15);
@@ -387,4 +397,19 @@ td {
     border: 2px solid #344638;
     border-radius: 12px;
     transition: background-color 0.3s ease;
+}
+
+/* ===== FOREST SCENERY BACKGROUND ===== */
+
+
+
+/* Forest trees and scenery */
+
+
+body {
+    background-image: url("forest.jpg.png") !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
 }
