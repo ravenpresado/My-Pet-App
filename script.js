@@ -4,6 +4,17 @@ const breedSelect = document.getElementById("breedSelect");
 const imageGallery = document.getElementById("imageGallery");
 const fetchButton = document.getElementById("fetchButton");
 const statusText = document.getElementById("status");
+const categoryIcon = document.getElementById("categoryIcon");
+const breedIcon = document.getElementById("breedIcon");
+
+const animalIcons = {
+    dogs: "🐶",
+    cats: "🐱",
+    birds: "🐦",
+    fishes: "🐟",
+    horses: "🐴",
+    chickens: "🐔"
+};
 
 const tableElements = {
     element: document.getElementById("element1"),
@@ -265,6 +276,17 @@ async function loadAnimalTypes() {
     if (!checkElements()) return;
 
     const category = animalCategory.value;
+
+    // Update the animal-themed dropdown icons
+const selectedIcon = animalIcons[category] || "🐾";
+
+if (categoryIcon) {
+    categoryIcon.textContent = selectedIcon;
+}
+
+if (breedIcon) {
+    breedIcon.textContent = selectedIcon;
+}
 
     breedSelect.innerHTML = "";
     images = [];

@@ -368,3 +368,23 @@ td {
     text-align: center;
     vertical-align: middle;
 }
+
+/* Animal-themed dropdown icons */
+.select-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 23px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Space for the animal icon */
+.select-wrapper select {
+    padding-left: 60px;
+    background-color: #f4f7f0;
+    border: 2px solid #344638;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}

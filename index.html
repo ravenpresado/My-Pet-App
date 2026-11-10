@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
 
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -15,46 +14,56 @@
 
         <h1>My Pet App</h1>
 
+        <!-- Animal Category -->
         <div class="form-group">
-    <label for="animalCategory">Select Animal Category:</label>
+            <label for="animalCategory">Select Animal Category:</label>
 
-    <div class="select-wrapper">
-        <select id="animalCategory">
-            <option value="dogs">Dogs</option>
-            <option value="cats">Cats</option>
-            <option value="birds">Birds</option>
-            <option value="fishes">Fishes</option>
-            <option value="horses">Horses</option>
-            <option value="chickens">Chickens</option>
-        </select>
+            <div class="select-wrapper">
+                <span class="select-icon" id="categoryIcon">🐾</span>
 
-        <button type="button" class="select-arrow" id="categoryArrow" aria-label="Open animal categories">
-            ▼
-        </button>
-    </div>
-</div>
+                <select id="animalCategory">
+                    <option value="dogs">Dogs</option>
+                    <option value="cats">Cats</option>
+                    <option value="birds">Birds</option>
+                    <option value="fishes">Fishes</option>
+                    <option value="horses">Horses</option>
+                    <option value="chickens">Chickens</option>
+                </select>
+
+                <button type="button" class="select-arrow" id="categoryArrow" aria-label="Open animal categories">
+                    ▼
+                </button>
+            </div>
+        </div>
+
+        <!-- Breed or Type -->
         <div class="form-group">
-    <label for="breedSelect">Select Breed or Type:</label>
+            <label for="breedSelect">Select Breed or Type:</label>
 
-    <div class="select-wrapper">
-        <select id="breedSelect">
-            <option value="">Loading animals...</option>
-        </select>
+            <div class="select-wrapper">
+                <span class="select-icon" id="breedIcon">🐾</span>
 
-        <button type="button" class="select-arrow" id="breedArrow" aria-label="Open animal breeds">
-            ▼
-        </button>
-    </div>
-</div>
+                <select id="breedSelect">
+                    <option value="">Loading animals...</option>
+                </select>
+
+                <button type="button" class="select-arrow" id="breedArrow" aria-label="Open animal breeds">
+                    ▼
+                </button>
+            </div>
+        </div>
+
+        <!-- Animal Image -->
         <div class="image-container">
             <div id="imageGallery" class="image-gallery"></div>
-           <p id="status"></p>
+            <p id="status"></p>
         </div>
 
         <button id="fetchButton" type="button">FETCH</button>
 
         <h2>Animal Information</h2>
 
+        <!-- Animal Information Table -->
         <table>
             <thead>
                 <tr>
@@ -65,12 +74,12 @@
             </thead>
 
             <tbody>
-    <tr>
-    <td id="element1">Waiting for animal selection...</td>
-    <td id="type1">Waiting for breed selection...</td>
-    <td id="meaning1">Waiting for information...</td>
-</tr>
-</tbody>
+                <tr>
+                    <td id="element1">Waiting for animal selection...</td>
+                    <td id="type1">Waiting for breed selection...</td>
+                    <td id="meaning1">Waiting for information...</td>
+                </tr>
+            </tbody>
         </table>
 
     </div>
