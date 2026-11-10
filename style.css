@@ -412,3 +412,10 @@ body {
     background: #ffffff !important;
     background-image: none !important;
 }
+
+/* Make all animal information bold */
+#element1,
+#type1,
+#meaning1 {
+    font-weight: 900 !important;
+}
