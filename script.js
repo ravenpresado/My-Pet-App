@@ -1,31 +1,20 @@
+
 const animalCategory = document.getElementById("animalCategory");
 const breedSelect = document.getElementById("breedSelect");
 const imageGallery = document.getElementById("imageGallery");
 const fetchButton = document.getElementById("fetchButton");
 const statusText = document.getElementById("status");
 
+const tableElements = {
+    element: document.getElementById("element1"),
+    type: document.getElementById("type1"),
+    meaning: document.getElementById("meaning1")
+};
+
 let images = [];
 let currentImageIndex = 0;
 let loadedAnimal = "";
 let loadedCategory = "";
-
-const tableElements = [
-    {
-        element: document.getElementById("element1"),
-        type: document.getElementById("type1"),
-        meaning: document.getElementById("meaning1")
-    },
-    {
-        element: document.getElementById("element2"),
-        type: document.getElementById("type2"),
-        meaning: document.getElementById("meaning2")
-    },
-    {
-        element: document.getElementById("element3"),
-        type: document.getElementById("type3"),
-        meaning: document.getElementById("meaning3")
-    }
-];
 
 const animalTypes = {
     cats: ["Persian", "Siamese", "Maine Coon", "Bengal", "Ragdoll", "Sphynx", "British Shorthair", "Domestic Shorthair"],
@@ -35,33 +24,95 @@ const animalTypes = {
     chickens: ["Silkie", "Rhode Island Red", "Leghorn", "Plymouth Rock", "Orpington", "Sussex", "Brahma"]
 };
 
-const animalDescriptions = {
-    "Persian": "A long-haired cat breed known for its calm personality.",
-    "Siamese": "A social cat breed known for its distinctive coloring.",
-    "Maine Coon": "A large domestic cat breed with a long coat.",
-    "Bengal": "A domestic cat breed known for its spotted or marbled coat.",
-    "Ragdoll": "A gentle cat breed with blue eyes and a soft coat.",
-    "Sphynx": "A cat breed known for its nearly hairless appearance.",
-    "Parrot": "A bird known for its curved beak and intelligence.",
-    "Canary": "A small songbird known for its singing.",
-    "Cockatiel": "A friendly pet bird with a distinctive crest.",
-    "Budgerigar": "A small, colorful parakeet often kept as a pet.",
-    "Eagle": "A large bird of prey with strong eyesight.",
-    "Owl": "A bird known for its large eyes and nighttime activity.",
-    "Goldfish": "A freshwater fish commonly kept in aquariums.",
-    "Betta Fish": "A colorful freshwater fish also called Siamese fighting fish.",
-    "Guppy": "A small freshwater fish known for its colorful tail.",
-    "Clownfish": "A colorful marine fish often associated with sea anemones.",
-    "Arabian": "A horse breed known for its endurance and distinctive head shape.",
-    "Thoroughbred": "A horse breed commonly associated with racing.",
-    "Clydesdale": "A large draft horse known for its strength.",
-    "Mustang": "A free-roaming horse descended from domestic horses.",
-    "Silkie": "A chicken breed known for its soft, fluffy feathers.",
-    "Rhode Island Red": "A chicken breed commonly raised for eggs and meat.",
-    "Leghorn": "A chicken breed well known for egg production.",
-    "Plymouth Rock": "A friendly chicken breed with barred feather patterns.",
-    "Orpington": "A chicken breed known for its calm nature and soft feathers."
+const animalNames = {
+    dogs: "Dog",
+    cats: "Cat",
+    birds: "Bird",
+    fishes: "Fish",
+    horses: "Horse",
+    chickens: "Chicken"
 };
+
+const characteristics = {
+    // Dogs
+    "Affenpinscher": "A small dog with a rough coat, a short face, and a lively, curious personality.",
+    "African": "A medium-sized, hardy dog native to Africa, known for its adaptability, alertness, and independence.",
+    "Airedale": "A large terrier with a wiry coat, known for its intelligence, courage, and playful nature.",
+    "Akita": "A large, powerful dog from Japan, known for its loyalty, confidence, and thick double coat.",
+    "Appenzeller": "A strong Swiss mountain dog with a tricolor coat, known for its energy, intelligence, and protective nature.",
+    "Australian": "A smart and energetic herding dog, known for its intelligence and colorful coat.",
+    "Shih Tzu": "The Shih Tzu is a sturdy little dog with a short snout and normally has large, dark brown eyes.",
+    "Shihtzu": "The Shih Tzu is a sturdy little dog with a short snout and normally has large, dark brown eyes.",
+    "Rhodesian Ridgeback": "The Rhodesian Ridgeback is a strong, athletic dog originally bred in southern Africa. It is known for the distinctive ridge of hair along its back.",
+
+    // Cats
+    "Persian": "The Persian is a long-haired cat known for its round face, short nose, and calm personality.",
+    "Siamese": "The Siamese is a slender cat with blue eyes, pointed coloring, and a vocal personality.",
+    "Maine Coon": "The Maine Coon is a large cat with a long coat, tufted ears, and a friendly personality.",
+    "Bengal": "The Bengal is a domestic cat with a spotted or marbled coat and an active personality.",
+    "Ragdoll": "The Ragdoll is a gentle cat with blue eyes, soft fur, and an affectionate nature.",
+    "Sphynx": "The Sphynx is a nearly hairless cat with large ears and an affectionate personality.",
+    "British Shorthair": "The British Shorthair is a sturdy cat with a dense coat, round face, and calm nature.",
+    "Domestic Shorthair": "The Domestic Shorthair is a short-haired cat with different coat colors and patterns.",
+
+    // Birds
+    "Parrot": "A parrot is a colorful bird with a curved beak and strong learning ability.",
+    "Canary": "The Canary is a small bird known for its beautiful singing.",
+    "Cockatiel": "The Cockatiel is a friendly bird with a distinctive crest and orange cheek patches.",
+    "Budgerigar": "The Budgerigar is a small, colorful parakeet known for its playful behavior.",
+    "Eagle": "The Eagle is a large bird of prey with powerful wings and excellent eyesight.",
+    "Owl": "The Owl is a bird with large eyes, soft feathers, and nighttime activity.",
+    "Pigeon": "The Pigeon is a bird with a short neck, small head, and strong flying ability.",
+    "Peacock": "The Peacock is known for its colorful feathers and large decorative tail.",
+
+    // Fish
+    "Goldfish": "The Goldfish is a freshwater fish commonly recognized by its bright orange color.",
+    "Betta Fish": "The Betta Fish is a colorful freshwater fish known for its flowing fins.",
+    "Guppy": "The Guppy is a small freshwater fish with colorful tails.",
+    "Clownfish": "The Clownfish is an orange marine fish with white stripes.",
+    "Angelfish": "The Angelfish is a freshwater fish with a tall, flattened body.",
+    "Koi Fish": "The Koi Fish is a colorful ornamental carp with beautiful scale patterns.",
+
+    // Horses
+    "Arabian": "The Arabian is a horse known for its refined head, endurance, and high tail carriage.",
+    "Thoroughbred": "The Thoroughbred is an athletic horse known for its speed and racing ability.",
+    "Clydesdale": "The Clydesdale is a large draft horse with a strong body and feathered legs.",
+    "Mustang": "The Mustang is a hardy free-roaming horse known for its strength.",
+    "Appaloosa": "The Appaloosa is a horse recognized by its distinctive spotted coat.",
+    "Friesian": "The Friesian is a horse known for its black coat, long mane, and graceful movement.",
+    "Quarter Horse": "The Quarter Horse is a muscular horse known for its speed and versatility.",
+
+    // Chickens
+    "Silkie": "The Silkie is a chicken known for its soft, fluffy feathers and gentle personality.",
+    "Rhode Island Red": "The Rhode Island Red is a chicken with rich red feathers, commonly raised for eggs.",
+    "Leghorn": "The Leghorn is a lightweight chicken known for its excellent egg production.",
+    "Plymouth Rock": "The Plymouth Rock is a friendly chicken with distinctive barred feathers.",
+    "Orpington": "The Orpington is a large chicken with soft feathers and a calm personality.",
+    "Sussex": "The Sussex is a chicken with a broad body and different feather colors.",
+    "Brahma": "The Brahma is a large chicken with feathered legs and a calm temperament."
+};
+
+// Check that the required HTML elements exist
+function checkElements() {
+    const missing = [];
+
+    if (!animalCategory) missing.push("animalCategory");
+    if (!breedSelect) missing.push("breedSelect");
+    if (!imageGallery) missing.push("imageGallery");
+    if (!fetchButton) missing.push("fetchButton");
+    if (!statusText) missing.push("status");
+
+    if (!tableElements.element) missing.push("element1");
+    if (!tableElements.type) missing.push("type1");
+    if (!tableElements.meaning) missing.push("meaning1");
+
+    if (missing.length > 0) {
+        console.error("Missing HTML elements:", missing.join(", "));
+        return false;
+    }
+
+    return true;
+}
 
 function formatBreedName(breed) {
     return breed
@@ -69,67 +120,36 @@ function formatBreedName(breed) {
         .replace(/\b\w/g, letter => letter.toUpperCase());
 }
 
+// Update the animal information table
 function updateAnimalTable(name, category) {
-    const animalOrigins = {
-        "Shih Tzu": "China",
-        "Beagle": "England",
-        "Bulldog": "England",
-        "Chihuahua": "Mexico",
-        "Dachshund": "Germany",
-        "Golden Retriever": "Scotland",
-        "German Shepherd": "Germany",
-        "Siberian Husky": "Siberia",
-        "Labrador Retriever": "Canada",
-        "Poodle": "Germany and France",
-        "Pomeranian": "Pomerania, Europe",
-        "Pug": "China",
-        "Persian": "Persia (modern-day Iran)",
-        "Siamese": "Thailand",
-        "Maine Coon": "United States",
-        "Bengal": "United States",
-        "Ragdoll": "United States",
-        "Parrot": "Various tropical regions",
-        "Canary": "Canary Islands",
-        "Cockatiel": "Australia",
-        "Budgerigar": "Australia",
-        "Peacock": "South Asia",
-        "Goldfish": "China",
-        "Betta Fish": "Southeast Asia",
-        "Guppy": "South America",
-        "Clownfish": "Indo-Pacific region",
-        "Koi Fish": "Japan",
-        "Arabian": "Arabian Peninsula",
-        "Thoroughbred": "England",
-        "Clydesdale": "Scotland",
-        "Mustang": "North America",
-        "Friesian": "Netherlands",
-        "Silkie": "China",
-        "Rhode Island Red": "United States",
-        "Leghorn": "Italy",
-        "Plymouth Rock": "United States",
-        "Orpington": "England"
-    };
+    if (!checkElements()) return;
 
-    const characteristics = animalDescriptions[name] ||
-        `A type of ${category.slice(0, -1)} with its own unique features.`;
+    const animalName = animalNames[category] || "Animal";
+    const normalizedName = name.trim().toLowerCase();
 
-    const origin = animalOrigins[name] || "Origin information unavailable.";
+    const matchingBreed = Object.keys(characteristics).find(
+        breed => breed.toLowerCase() === normalizedName
+    );
 
-    const information = [
-        [name, "Selected Animal", name],
-        [origin, "Country or Region", origin],
-        [characteristics, "Characteristics", characteristics]
-    ];
+    let description;
 
-    information.forEach((item, index) => {
-        tableElements[index].element.textContent = item[0];
-        tableElements[index].type.textContent = item[1];
-        tableElements[index].meaning.textContent = item[2];
-    });
+    if (matchingBreed) {
+        description = characteristics[matchingBreed];
+    } else {
+        description = category === "dogs"
+            ? `The ${name} is a dog breed.`
+            : `The ${name} is a type of ${animalName.toLowerCase()}.`;
+    }
+
+    tableElements.element.textContent = animalName;
+    tableElements.type.textContent = name;
+    tableElements.meaning.textContent = description;
 }
 
 // Load animal choices
 async function loadAnimalTypes() {
+    if (!checkElements()) return;
+
     const category = animalCategory.value;
 
     breedSelect.innerHTML = "";
@@ -157,8 +177,6 @@ async function loadAnimalTypes() {
                 breedSelect.appendChild(option);
             });
 
-            breedSelect.value = "shihtzu";
-
         } catch (error) {
             statusText.textContent = "Unable to load dog breeds.";
             console.error(error);
@@ -178,7 +196,10 @@ async function loadAnimalTypes() {
 
 // Fetch dog images
 async function fetchDogImages(breed) {
-    const response = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
+    const response = await fetch(
+        `https://dog.ceo/api/breed/${breed}/images`
+    );
+
     const data = await response.json();
 
     if (!response.ok || data.status !== "success") {
@@ -234,7 +255,7 @@ async function fetchOtherAnimalImages(name) {
     )].sort(() => Math.random() - 0.5).slice(0, 8);
 }
 
-// Display exactly ONE image
+// Display only ONE image at a time
 function displayCurrentImage(animalName) {
     imageGallery.innerHTML = "";
 
@@ -244,12 +265,13 @@ function displayCurrentImage(animalName) {
     image.className = "gallery-image";
 
     imageGallery.appendChild(image);
-
     statusText.textContent = "";
 }
 
-// FETCH button: one click = one image
+// FETCH button: each click displays the next image
 async function fetchAnimalImage() {
+    if (!checkElements()) return;
+
     const category = animalCategory.value;
     const selectedAnimal = breedSelect.value;
 
@@ -308,27 +330,36 @@ async function fetchAnimalImage() {
 }
 
 // Event listeners
-animalCategory.addEventListener("change", loadAnimalTypes);
+if (checkElements()) {
+    animalCategory.addEventListener("change", loadAnimalTypes);
 
-breedSelect.addEventListener("change", () => {
-    images = [];
-    currentImageIndex = 0;
-    loadedAnimal = "";
-    loadedCategory = "";
-    imageGallery.innerHTML = "";
-    statusText.textContent = "Click FETCH to see pictures.";
-});
+    breedSelect.addEventListener("change", () => {
+        images = [];
+        currentImageIndex = 0;
+        loadedAnimal = "";
+        loadedCategory = "";
+        imageGallery.innerHTML = "";
+        statusText.textContent = "Click FETCH to see pictures.";
+    });
 
-fetchButton.addEventListener("click", fetchAnimalImage);
+    fetchButton.addEventListener("click", fetchAnimalImage);
 
-// Open dropdown only when the arrow is clicked
-document.getElementById("categoryArrow").addEventListener("click", () => {
-    animalCategory.showPicker();
-});
+    // Open dropdown only when the arrow is clicked
+    const categoryArrow = document.getElementById("categoryArrow");
+    const breedArrow = document.getElementById("breedArrow");
 
-document.getElementById("breedArrow").addEventListener("click", () => {
-    breedSelect.showPicker();
-});
+    if (categoryArrow) {
+        categoryArrow.addEventListener("click", () => {
+            animalCategory.showPicker();
+        });
+    }
 
-// Initial loading only
-loadAnimalTypes();
+    if (breedArrow) {
+        breedArrow.addEventListener("click", () => {
+            breedSelect.showPicker();
+        });
+    }
+
+    // Initial loading
+    loadAnimalTypes();
+}
