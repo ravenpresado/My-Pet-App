@@ -362,3 +362,9 @@ h1 {
     filter: url(#sticker-outline);
     text-align: center;
 }
+
+th,
+td {
+    text-align: center;
+    vertical-align: middle;
+}
