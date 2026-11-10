@@ -17,11 +17,48 @@ let loadedAnimal = "";
 let loadedCategory = "";
 
 const animalTypes = {
-    cats: ["Persian", "Siamese", "Maine Coon", "Bengal", "Ragdoll", "Sphynx", "British Shorthair", "Domestic Shorthair"],
-    birds: ["Parrot", "Canary", "Cockatiel", "Budgerigar", "Eagle", "Owl", "Pigeon", "Peacock"],
-    fishes: ["Goldfish", "Betta Fish", "Guppy", "Clownfish", "Angelfish", "Koi Fish"],
-    horses: ["Arabian", "Thoroughbred", "Clydesdale", "Mustang", "Appaloosa", "Friesian", "Quarter Horse"],
-    chickens: ["Silkie", "Rhode Island Red", "Leghorn", "Plymouth Rock", "Orpington", "Sussex", "Brahma"]
+    dogs: [
+        "Bakharwal", "Basenji", "Beagle", "Bluetick", "Borzoi",
+        "Bouvier", "Boxer", "Brabancon", "Briard", "Buhund",
+        "Bulldog", "Bullterier", "Havanese", "Hound", "Husky",
+        "Keeshond", "Kelpie", "Kombai", "Komondor", "Kuvasz",
+        "Labradoodle", "Labrador", "Lhasa", "Malamute", "Malanois",
+        "Maltese", "Mastiff", "Mexucanhairless", "Mix", "Mountain",
+        "Mudhol", "Newfoundland", "Otterhound", "Ovcharka", "Papillon",
+        "Pariah", "Pekinese", "Pembroke", "Pinscher", "Pitbull",
+        "Pointer", "Pomeranian", "Poodle", "Pug", "Puggle",
+        "Pyrenees", "Redbone", "Retriever", "Ridgeback", "Rottweiler",
+        "Rough", "Saluki", "Samoyed", "Schipperke", "Schnauzer",
+        "Segugio", "Setter", "Sharpei", "Sheepdog", "Shiba",
+        "Shih Tzu", "Spaniel", "Spitz", "Springer", "St Bernard",
+        "Terrier", "Tervuren", "Visla", "Waterdog", "Weimaraner",
+        "Whippet", "Wolfhound"
+    ],
+
+    cats: [
+        "Persian", "Siamese", "Maine Coon", "Bengal",
+        "Ragdoll", "Sphynx", "British Shorthair", "Domestic Shorthair"
+    ],
+
+    birds: [
+        "Parrot", "Canary", "Cockatiel", "Budgerigar",
+        "Eagle", "Owl", "Pigeon", "Peacock"
+    ],
+
+    fishes: [
+        "Goldfish", "Betta Fish", "Guppy", "Clownfish",
+        "Angelfish", "Koi Fish"
+    ],
+
+    horses: [
+        "Arabian", "Thoroughbred", "Clydesdale", "Mustang",
+        "Appaloosa", "Friesian", "Quarter Horse"
+    ],
+
+    chickens: [
+        "Silkie", "Rhode Island Red", "Leghorn",
+        "Plymouth Rock", "Orpington", "Sussex", "Brahma"
+    ]
 };
 
 const animalNames = {
